@@ -96,7 +96,7 @@ Case Styles
 ### Cobol
 ```python
 >>> case.cobol(string)
-'My-Mask-Of-Sanity-Is-Slowly-Slipping'
+'MY-MASK-OF-SANITY-IS-SLOWLY-SLIPPING'
 ```
 
 ### Dot
