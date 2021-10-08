@@ -1,6 +1,8 @@
 import re
 import typing
 
+# Todo: Switch to class-based approach for configuration changes
+
 def unflatten(string: str) -> typing.List[str]:
     words: typing.List[str] = []
 
@@ -18,7 +20,7 @@ def unflatten(string: str) -> typing.List[str]:
 def parse(string: str) -> typing.List[str]:
     return \
     [
-        word.lower()
+        word
         for segment in re.findall \
         (
             pattern = r'[a-zA-Z0-9]+',
