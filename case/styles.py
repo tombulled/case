@@ -2,86 +2,86 @@ from . import models
 from . import translators
 from . import renderers
 from . import types
-from . import style
+from . import cases
 
 __all__ = ['Lower', 'Upper'] # And the others...
 
-@style.style
+@cases
 class Lower(models.Case):
     prepare: types.Translator = translators.lower
     render:  types.Renderer   = renderers.space
 
-@style.style
+@cases
 class Upper(models.Case):
     prepare: types.Translator = translators.upper
     render:  types.Renderer   = renderers.space
 
-@style.style
+@cases
 class Title(models.Case):
     prepare: types.Translator = translators.title
     render:  types.Renderer   = renderers.space
 
-@style.style
+@cases
 class Sentence(models.Case):
     prepare: types.Translator = translators.capitalize
     render:  types.Renderer   = renderers.space
 
-@style.style
+@cases
 class Snake(models.Case):
     prepare: types.Translator = translators.lower
     render:  types.Renderer   = renderers.underscore
 
-@style.style
+@cases
 class Helter(models.Case):
     prepare: types.Translator = translators.title
     render:  types.Renderer   = renderers.underscore
 
-@style.style
+@cases
 class Macro(models.Case):
     prepare: types.Translator = translators.upper
     render:  types.Renderer   = renderers.underscore
 
-@style.style
+@cases
 class Kebab(models.Case):
     prepare: types.Translator = translators.lower
     render:  types.Renderer   = renderers.hyphen
 
-@style.style
+@cases
 class Train(models.Case):
     prepare: types.Translator = translators.title
     render:  types.Renderer   = renderers.hyphen
 
-@style.style
+@cases
 class Cobol(models.Case):
     prepare: types.Translator = translators.upper
     render:  types.Renderer   = renderers.hyphen
 
-@style.style
+@cases
 class Flat(models.Case):
     prepare: types.Translator = translators.lower
     render:  types.Renderer   = renderers.concatenate
 
-@style.style
+@cases
 class Flush(models.Case):
     prepare: types.Translator = translators.upper
     render:  types.Renderer   = renderers.concatenate
 
-@style.style
+@cases
 class Pascal(models.Case):
     prepare: types.Translator = translators.title
     render:  types.Renderer   = renderers.concatenate
 
-@style.style
+@cases
 class Camel(models.Case):
     prepare: types.Translator = translators.dromedary
     render:  types.Renderer   = renderers.concatenate
 
-@style.style
+@cases
 class Dot(models.Case):
     prepare: types.Translator = translators.lower
     render:  types.Renderer   = renderers.period
 
-@style.style
+@cases
 class Path(models.Case):
     prepare: types.Translator = translators.lower
     render:  types.Renderer   = renderers.slash

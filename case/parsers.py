@@ -3,6 +3,7 @@ import typing
 
 # TODO: Switch to class-based approach for configuration changes
 
+# TODO: Strip unwanted characters? Make a `strip` function to do this? (sanitise?)
 def unflatten(string: str) -> typing.List[str]:
     words: typing.List[str] = []
 

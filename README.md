@@ -106,100 +106,100 @@ string: str = 'MY __mask__ --ofSanityIS.slowly#Slipping'
 
 ### Styles
 
-#### Lower
+#### `lower`
 ```python
 >>> case.lower(string)
 'my mask of sanity is slowly slipping'
 >>>
 ```
 
-#### Upper
+#### `upper`
 ```python
 >>> case.upper(string)
 'MY MASK OF SANITY IS SLOWLY SLIPPING'
 >>>
 ```
 
-#### Title
+#### `title`
 ```python
 >>> case.title(string)
 'My Mask Of Sanity Is Slowly Slipping'
 >>>
 ```
 
-#### Sentence
+#### `sentence`
 ```python
 >>> case.sentence(string)
 'My mask of sanity is slowly slipping'
 ```
 
-#### Snake
+#### `snake`
 ```python
 >>> case.snake(string)
 'my_mask_of_sanity_is_slowly_slipping'
 ```
 
-#### Helter
+#### `helter`
 ```python
 >>> case.helter(string)
 'My_Mask_Of_Sanity_Is_Slowly_Slipping'
 ```
 
-#### Macro
+#### `macro`
 ```python
 >>> case.macro(string)
 'MY_MASK_OF_SANITY_IS_SLOWLY_SLIPPING'
 ```
 
-#### Flat
+#### `flat`
 ```python
 >>> case.flat(string)
 'mymaskofsanityisslowlyslipping'
 ```
 
-#### Flush
+#### `flush`
 ```python
 >>> case.flush(string)
 'MYMASKOFSANITYISSLOWLYSLIPPING'
 ```
 
-#### Camel
+#### `camel`
 ```python
 >>> case.camel(string)
 'myMaskOfSanityIsSlowlySlipping'
 ```
 
-#### Pascal
+#### `pascal`
 ```python
 >>> case.pascal(string)
 'MyMaskOfSanityIsSlowlySlipping'
 ```
 
-#### Kebab
+#### `kebab`
 ```python
 >>> case.kebab(string)
 'my-mask-of-sanity-is-slowly-slipping'
 ```
 
-#### Train
+#### `train`
 ```python
 >>> case.train(string)
 'My-Mask-Of-Sanity-Is-Slowly-Slipping'
 ```
 
-#### Cobol
+#### `cobol`
 ```python
 >>> case.cobol(string)
 'MY-MASK-OF-SANITY-IS-SLOWLY-SLIPPING'
 ```
 
-#### Dot
+#### `dot`
 ```python
 >>> case.dot(string)
 'my.mask.of.sanity.is.slowly.slipping'
 ```
 
-#### Path
+#### `path`
 ```python
 >>> case.path(string)
 'my/mask/of/sanity/is/slowly/slipping'

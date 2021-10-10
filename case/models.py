@@ -7,7 +7,9 @@ from . import utils
 
 __all__ = ['Case']
 
-@dataclasses.dataclass(frozen = True, repr = False)
+model = dataclasses.dataclass(frozen = True, repr = False)
+
+@model
 class Case:
     render:  types.Renderer
     prepare: types.Translator     = utils.identity

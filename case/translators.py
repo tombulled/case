@@ -3,8 +3,11 @@ import typing
 
 def enumerate_words(translator):
     def wrapper(words):
-        for index, word in enumerate(words):
-            yield translator(index, word)
+        return \
+        [
+            translator(index, word)
+            for index, word in enumerate(words)
+        ]
 
     return wrapper
 
@@ -12,13 +15,21 @@ def enumerate_characters(translator):
     def wrapper(words):
         index: int = 0
 
+        translated_words: typing.List[str] = []
+
         word: str
         for word in words:
+            translated_word: str = ''
+
             character: str
             for character in word:
-                yield translator(index, character)
+                translated_word += translator(index, character)
 
                 index += 1
+
+            translated_words.append(translated_word)
+
+        return translated_words
 
     return wrapper
 
@@ -50,6 +61,7 @@ def dromedary(index: int, word: str) -> str:
 def alternating(index: int, character: int) -> str:
     return (str.lower, str.upper)[index % 2](character)
 
+# TODO: Find a way to rename to 'random'
 @enumerate_characters
 def sponge(index: int, character: int) -> str:
     return random.choice((str.lower, str.upper))(character)
