@@ -1,7 +1,9 @@
-from .        import cases
-from .cases   import *
+from . import cases
+from .cases import *
+
 from .parsers import parse
-from .base    import Case
+from .models  import Case
+from .style  import styles, style, register
 
 lower    = cases.Lower()
 upper    = cases.Upper()

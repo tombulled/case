@@ -1,7 +1,7 @@
 import re
 import typing
 
-# Todo: Switch to class-based approach for configuration changes
+# TODO: Switch to class-based approach for configuration changes
 
 def unflatten(string: str) -> typing.List[str]:
     words: typing.List[str] = []

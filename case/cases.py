@@ -1,18 +1,87 @@
-from . import foundations
+from . import models
+from . import translators
+from . import renderers
+from . import types
+from . import style
 
-class Lower   (foundations.SpaceSeparated,      foundations.Lower): ...
-class Upper   (foundations.SpaceSeparated,      foundations.Upper): ...
-class Title   (foundations.SpaceSeparated,      foundations.Title): ...
-class Sentence(foundations.SpaceSeparated,      foundations.Capitalize): ...
-class Snake   (foundations.UnderscoreSeparated, foundations.Lower): ...
-class Helter  (foundations.UnderscoreSeparated, foundations.Title): ...
-class Macro   (foundations.UnderscoreSeparated, foundations.Upper): ...
-class Kebab   (foundations.HyphenSeparated,     foundations.Lower): ...
-class Train   (foundations.HyphenSeparated,     foundations.Title): ...
-class Cobol   (foundations.HyphenSeparated,     foundations.Upper): ...
-class Flat    (foundations.NotSeparated,        foundations.Lower): ...
-class Flush   (foundations.NotSeparated,        foundations.Upper): ...
-class Pascal  (foundations.NotSeparated,        foundations.Title): ...
-class Camel   (foundations.NotSeparated,        foundations.Dromedary): ...
-class Dot     (foundations.DotSeparated,        foundations.Lower): ...
-class Path    (foundations.SlashSeparated,      foundations.Lower): ...
+__all__ = ['Lower', 'Upper'] # And the others...
+
+@style.style
+class Lower(models.Case):
+    prepare: types.Translator = translators.lower
+    render:  types.Renderer   = renderers.space
+
+@style.style
+class Upper(models.Case):
+    prepare: types.Translator = translators.upper
+    render:  types.Renderer   = renderers.space
+
+@style.style
+class Title(models.Case):
+    prepare: types.Translator = translators.title
+    render:  types.Renderer   = renderers.space
+
+@style.style
+class Sentence(models.Case):
+    prepare: types.Translator = translators.capitalize
+    render:  types.Renderer   = renderers.space
+
+@style.style
+class Snake(models.Case):
+    prepare: types.Translator = translators.lower
+    render:  types.Renderer   = renderers.underscore
+
+@style.style
+class Helter(models.Case):
+    prepare: types.Translator = translators.title
+    render:  types.Renderer   = renderers.underscore
+
+@style.style
+class Macro(models.Case):
+    prepare: types.Translator = translators.upper
+    render:  types.Renderer   = renderers.underscore
+
+@style.style
+class Kebab(models.Case):
+    prepare: types.Translator = translators.lower
+    render:  types.Renderer   = renderers.hyphen
+
+@style.style
+class Train(models.Case):
+    prepare: types.Translator = translators.title
+    render:  types.Renderer   = renderers.hyphen
+
+@style.style
+class Cobol(models.Case):
+    prepare: types.Translator = translators.upper
+    render:  types.Renderer   = renderers.hyphen
+
+@style.style
+class Flat(models.Case):
+    prepare: types.Translator = translators.lower
+    render:  types.Renderer   = renderers.concatenate
+
+@style.style
+class Flush(models.Case):
+    prepare: types.Translator = translators.upper
+    render:  types.Renderer   = renderers.concatenate
+
+@style.style
+class Pascal(models.Case):
+    prepare: types.Translator = translators.title
+    render:  types.Renderer   = renderers.concatenate
+
+@style.style
+class Camel(models.Case):
+    prepare: types.Translator = translators.dromedary
+    render:  types.Renderer   = renderers.concatenate
+
+@style.style
+class Dot(models.Case):
+    prepare: types.Translator = translators.lower
+    render:  types.Renderer   = renderers.period
+
+@style.style
+class Path(models.Case):
+    prepare: types.Translator = translators.lower
+    render:  types.Renderer   = renderers.slash
