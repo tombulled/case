@@ -3,10 +3,9 @@ Case Styles
 
 ## Usage
 ```python
->>> import case
->>>
->>> string: str = 'MY __mask__ --ofSanityIS.slowly#Slipping'
->>>
+import case
+
+string: str = 'MY __mask__ --ofSanityIS.slowly#Slipping'
 ```
 
 ### Parsers
@@ -14,7 +13,7 @@ Case Styles
 #### `parse`
 ```python
 >>> case.parse(string)
-['my', 'mask', 'of', 'sanity', 'is', 'slowly', 'slipping']
+['MY', 'mask', 'of', 'Sanity', 'IS', 'slowly', 'Slipping']
 ```
 
 ### Translators
