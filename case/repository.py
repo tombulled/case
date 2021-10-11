@@ -3,14 +3,18 @@ import functools
 
 from . import models
 from . import utils
-from . import errors
 from . import parsers
 from . import translators
 from . import renderers
 
-class Cases(dict):
+class Cases:
+    _store: set
+
+    def __init__(self):
+        self._store = set()
+
     def __iter__(self):
-        return iter(self.values())
+        return iter(self._store)
 
     def __repr__(self) -> str:
         return '{class_name}[{cases}]'.format \
@@ -69,20 +73,30 @@ class Cases(dict):
 
         return wrap(cls_or_fn)
 
-    def __setitem__(self, style: str, case: models.Case):
-        assert style == case.style, 'Case styles do not match'
-
-        # Note: Instead use - if isinstance(style, str) and style and ...
-        if style is None:
-            raise errors.RegistrationError('Anyonymous cases cannot be registered')
-
-        # Note: Should anonymous cases be allowed if provided a `style` name?
-        super().__setitem__(style, case)
+    def get(self, style: str, default: typing.Any = None) -> typing.Any:
+        return self._store.get(style, default = default)
 
     def add(self, case: models.Case):
-        self[case.style] = case
+        return self._store.add(case)
 
-    def determine(self, string: str) -> typing.List[models.Case]:
+    def clear(self) -> None:
+        return self._store.clear()
+
+    def copy(self):
+        inst = self.__class__()
+        inst.update(self._store)
+        return inst
+
+    def pop(self) -> models.Case:
+        return self._store.pop()
+
+    def remove(self, case: models.Case) -> None:
+        return self._store.remove(case)
+
+    def update(self, cases) -> None:
+        self._store.update(cases)
+
+    def identify(self, string: str) -> typing.List[models.Case]:
         return \
         [
             case

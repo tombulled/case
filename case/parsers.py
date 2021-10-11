@@ -1,6 +1,10 @@
 import re
 import typing
 
+# TODO: Implement
+class Parser:
+    ...
+
 # TODO: Switch to class-based approach for configuration changes
 
 # TODO: Strip unwanted characters? Make a `strip` function to do this? (sanitise?)

@@ -1,6 +1,10 @@
 import random
 import typing
 
+# Note: Make <Words(List[str])> class with each of these (and renderers) as a method ?
+# Validation can be done on each item to ensure they are 'sanitised'
+# One for string as well? e.g. `CasedString`
+
 def enumerate_words(translator):
     def wrapper(words):
         return \

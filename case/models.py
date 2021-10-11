@@ -5,8 +5,6 @@ from . import types
 from . import parsers
 from . import utils
 
-__all__ = ['Case']
-
 model = dataclasses.dataclass(frozen = True, repr = False)
 
 @model

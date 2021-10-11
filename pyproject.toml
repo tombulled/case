@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "case"
 version = "0.1.1"
-description = ""
+description = "String case conversion, identification and parsing"
 authors = ["Tom Bulled <26026015+tombulled@users.noreply.github.com>"]
 
 [tool.poetry.dependencies]

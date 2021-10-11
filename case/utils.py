@@ -1,8 +1,7 @@
 import typing
 import types
 
-# https://toolz.readthedocs.io/en/latest/api.html#toolz.functoolz.compose_left
-def compose(*functions):
+def compose(*functions: typing.Callable):
     def wrapper(*args, **kwargs):
         response: typing.Any = None
 
@@ -18,7 +17,9 @@ def compose(*functions):
 
     return wrapper
 
-def identity(x): return x
+# Note: Use <TypeVar> of 'T' ?
+def identity(x: typing.Any) -> typing.Any:
+    return x
 
-def is_lambda(obj):
+def is_lambda(obj: typing.Any):
     return isinstance(obj, types.LambdaType) and obj.__name__ == '<lambda>'

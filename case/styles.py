@@ -1,10 +1,10 @@
 from . import models
-from . import translators
 from . import renderers
+from . import repository
+from . import translators
 from . import types
-from . import cases
 
-__all__ = ['Lower', 'Upper'] # And the others...
+cases = repository.Cases()
 
 @cases
 class Lower(models.Case):
