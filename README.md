@@ -3,7 +3,7 @@ String case conversion, identification, parsing and creation
 
 ## Usage
 ```python
-import case
+>>> import case
 ```
 
 ### Parsing
