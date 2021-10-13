@@ -4,7 +4,7 @@ from . import repositories
 from . import translators
 from . import types
 
-cases = repositories.Cases()
+cases: repositories.Cases = repositories.Cases()
 
 @cases
 class Lower(models.Case):
