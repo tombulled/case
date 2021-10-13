@@ -38,11 +38,14 @@ class Parser(AbstractParser):
 
         return words
 
-    # TODO: Add `keep_case` attribute?
-    def parse(self, string: str) -> typing.List[str]:
+    def parse(self, string: str, case_sensitive: bool = True) -> typing.List[str]:
         return \
         [
-            word
+            (
+                word
+                if case_sensitive
+                else word.lower()
+            )
             for segment in self._split_sentence(string)
             for word in self._split_word(segment)
         ]
