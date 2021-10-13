@@ -72,8 +72,8 @@ class Cases(Repository):
             elif callable(cls_or_fn):
                 case = models.Case \
                 (
-                    renderer = cls_or_fn,
-                    style    = case_style,
+                    render = cls_or_fn,
+                    style  = case_style,
                 )
 
             self.add(case)
