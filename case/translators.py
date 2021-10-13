@@ -3,6 +3,7 @@ import typing
 import itertools
 
 from . import utils
+from . import renderers
 
 def lower(words: typing.List[str]) -> typing.List[str]:
     return [word.lower() for word in words]
@@ -13,7 +14,6 @@ def upper(words: typing.List[str]) -> typing.List[str]:
 def title(words: typing.List[str]) -> typing.List[str]:
     return [word.title() for word in words]
 
-# TODO: Rename -> 'invert'
 def swapcase(words: typing.List[str]) -> typing.List[str]:
     return [word.swapcase() for word in words]
 
@@ -50,11 +50,10 @@ def alternating(words: typing.List[str]) -> typing.List[str]:
         sizes  = [len(word) for word in words],
     )
 
-# TODO: Rename -> 'random'
 def sponge(words: typing.List[str]) -> typing.List[str]:
     return utils.chunk \
     (
-        string = ''.join \
+        string = renderers.concatenate \
         (
             random.choice((str.lower, str.upper))(character)
             for word      in words
