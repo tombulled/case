@@ -3,9 +3,8 @@ import functools
 
 from . import models
 from . import utils
-from . import parsers
-from . import translators
-from . import renderers
+
+# TODO: Make base repository <Repository>
 
 class Cases:
     _store: set
@@ -42,14 +41,7 @@ class Cases:
             case_name = name
 
             if case_name is None:
-                snake = utils.compose \
-                (
-                    parsers.unflatten,
-                    translators.lower,
-                    renderers.underscore,
-                )
-
-                case_name = snake(cls_or_fn.__name__)
+                case_name = cls_or_fn.__name__.lower()
 
             if is_type:
                 @functools.wraps(cls_or_fn, updated = ())

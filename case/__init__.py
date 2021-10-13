@@ -1,7 +1,11 @@
-from .repository import Cases
-from .models     import Case
-from .parsers    import parse, unflatten
-from .styles     import *
+from .models       import Case
+from .parsers      import Parser
+from .repositories import Cases
+from .styles       import *
+
+parser = Parser()
+
+parse = parser.parse
 
 identify = cases.identify
 case     = cases.__call__

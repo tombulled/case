@@ -1,10 +1,10 @@
 from . import models
 from . import renderers
-from . import repository
+from . import repositories
 from . import translators
 from . import types
 
-cases = repository.Cases()
+cases = repositories.Cases()
 
 @cases
 class Lower(models.Case):
