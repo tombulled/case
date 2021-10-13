@@ -11,10 +11,10 @@ String case conversion, identification, parsing and creation
 >>> string = 'MY __mask__ --ofSanityIS.slowly#Slipping'
 >>>
 >>> case.parse(string)
-['MY', 'mask', 'of', 'Sanity', 'IS', 'slowly', 'Slipping']
->>>
->>> case.parse(string, case_sensitive = False)
 ['my', 'mask', 'of', 'sanity', 'is', 'slowly', 'slipping']
+>>>
+>>> case.parse(string, case_sensitive = True)
+['MY', 'mask', 'of', 'Sanity', 'IS', 'slowly', 'Slipping']
 ```
 
 ### Identification

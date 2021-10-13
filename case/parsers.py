@@ -38,7 +38,7 @@ class Parser(AbstractParser):
 
         return words
 
-    def parse(self, string: str, case_sensitive: bool = True) -> typing.List[str]:
+    def parse(self, string: str, case_sensitive: bool = False) -> typing.List[str]:
         return \
         [
             (
