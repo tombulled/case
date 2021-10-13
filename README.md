@@ -8,15 +8,19 @@ import case
 string = 'MY __mask__ --ofSanityIS.slowly#Slipping'
 ```
 
-### Parsers
-
-#### `parse`
+### Parsing
 ```python
 >>> case.parse(string)
 ['MY', 'mask', 'of', 'Sanity', 'IS', 'slowly', 'Slipping']
 ```
 
-### Styles
+### Identification
+```python
+>>> case.identify('fooBar')
+[Case(style='camel')]
+```
+
+### Conversion
 
 #### `lower`
 ```python
