@@ -1,71 +1,64 @@
 import random
 import typing
+import itertools
 
-# Note: Make <Words(List[str])> class with each of these (and renderers) as a method ?
-# Validation can be done on each item to ensure they are 'sanitised'
-# One for string as well? e.g. `CasedString`
+from . import utils
 
-def enumerate_words(translator):
-    def wrapper(words):
-        return \
-        [
-            translator(index, word)
-            for index, word in enumerate(words)
-        ]
+def lower(words: typing.List[str]) -> typing.List[str]:
+    return [word.lower() for word in words]
 
-    return wrapper
+def upper(words: typing.List[str]) -> typing.List[str]:
+    return [word.upper() for word in words]
 
-def enumerate_characters(translator):
-    def wrapper(words):
-        index: int = 0
+def title(words: typing.List[str]) -> typing.List[str]:
+    return [word.title() for word in words]
 
-        translated_words: typing.List[str] = []
+# TODO: Rename -> 'invert'
+def swapcase(words: typing.List[str]) -> typing.List[str]:
+    return [word.swapcase() for word in words]
 
-        word: str
-        for word in words:
-            translated_word: str = ''
+def capitalize(words: typing.List[str]) -> typing.List[str]:
+    return \
+    [
+        (
+            word.title()
+            if index == 0
+            else word.lower()
+        )
+        for index, word in enumerate(words)
+    ]
 
-            character: str
-            for character in word:
-                translated_word += translator(index, character)
+def dromedary(words: typing.List[str]) -> typing.List[str]:
+    return \
+    [
+        (
+            word.lower()
+            if index == 0
+            else word.title()
+        )
+        for index, word in enumerate(words)
+    ]
 
-                index += 1
+def alternating(words: typing.List[str]) -> typing.List[str]:
+    return utils.chunk \
+    (
+        string = ''.join \
+        (
+            (str.lower, str.upper)[index % 2](character)
+            for index, character in enumerate(itertools.chain(*words))
+        ),
+        sizes  = [len(word) for word in words],
+    )
 
-            translated_words.append(translated_word)
-
-        return translated_words
-
-    return wrapper
-
-@enumerate_words
-def lower(index: int, word: str) -> str:
-    return word.lower()
-
-@enumerate_words
-def upper(index: int, word: str) -> str:
-    return word.upper()
-
-@enumerate_words
-def title(index: int, word: str) -> str:
-    return word.title()
-
-@enumerate_words
-def swapcase(index: int, word: str) -> str:
-    return word.swapcase()
-
-@enumerate_words
-def capitalize(index: int, word: str) -> str:
-    return word.title() if index == 0 else word.lower()
-
-@enumerate_words
-def dromedary(index: int, word: str) -> str:
-    return word.lower() if index == 0 else word.title()
-
-@enumerate_characters
-def alternating(index: int, character: int) -> str:
-    return (str.lower, str.upper)[index % 2](character)
-
-# TODO: Find a way to rename to 'random'
-@enumerate_characters
-def sponge(index: int, character: int) -> str:
-    return random.choice((str.lower, str.upper))(character)
+# TODO: Rename -> 'random'
+def sponge(words: typing.List[str]) -> typing.List[str]:
+    return utils.chunk \
+    (
+        string = ''.join \
+        (
+            random.choice((str.lower, str.upper))(character)
+            for word      in words
+            for character in word
+        ),
+        sizes  = [len(word) for word in words],
+    )

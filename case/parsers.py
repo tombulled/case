@@ -38,6 +38,7 @@ class Parser(AbstractParser):
 
         return words
 
+    # TODO: Add `keep_case` attribute?
     def parse(self, string: str) -> typing.List[str]:
         return \
         [
