@@ -1,27 +1,47 @@
-import typing
+import dataclasses
 import functools
+import typing
 
 from . import models
 from . import utils
 
-# TODO: Make base repository <Repository>
+@dataclasses.dataclass
+class Repository:
+    store: set = dataclasses.field(default_factory = set)
 
-class Cases:
-    _store: set
-
-    def __init__(self):
-        self._store = set()
-
-    def __iter__(self):
-        return iter(self._store)
+    def __iter__(self) -> typing.Iterable:
+        return iter(self.store)
 
     def __repr__(self) -> str:
         return '{class_name}[{cases}]'.format \
         (
             class_name = type(self).__name__,
-            cases = ', '.join(map(repr, self))
+            cases      = ', '.join(map(repr, self))
         )
 
+    def add(self, item: typing.Any) -> None:
+        return self.store.add(item)
+
+    def clear(self) -> None:
+        return self.store.clear()
+
+    def copy(self):
+        clone = self.__class__()
+
+        clone.update(self.store)
+
+        return clone
+
+    def pop(self) -> typing.Any:
+        return self.store.pop()
+
+    def remove(self, item: typing.Any) -> None:
+        return self.store.remove(item)
+
+    def update(self, *iterables: typing.Iterable) -> None:
+        return self.store.update(*iterables)
+
+class Cases(Repository):
     def __call__ \
             (
                 self,
@@ -31,62 +51,56 @@ class Cases:
                 name: typing.Optional[str] = None,
             ):
         def wrap(cls_or_fn: typing.Union[typing.Type[models.Case], typing.Callable]):
-            # NOTE: Be more lenient?
-            if not (is_type := isinstance(cls_or_fn, type)) and not (is_callable := callable(cls_or_fn)):
-                raise TypeError(f'Must be called with a Case type, or callable, not {type(cls_or_fn)!r}')
+            case_style: typing.Optional[str] = \
+            (
+                cls_or_fn.__name__.lower()
+                if name is None and utils.named(cls_or_fn)
+                else name
+            )
 
-            if utils.is_lambda(cls_or_fn):
-                raise TypeError('Provided callable is an anonymous lambda function, hence it has no usable name')
+            case: models.Case
 
-            case_name = name
-
-            if case_name is None:
-                case_name = cls_or_fn.__name__.lower()
-
-            if is_type:
+            if isinstance(cls_or_fn, type):
                 @functools.wraps(cls_or_fn, updated = ())
                 @models.model
                 class Wrapper(models.model(cls_or_fn)):
-                    style: typing.Optional[str] = case_name
+                    style: typing.Optional[str] = case_style
 
-                styled = Wrapper
                 case = Wrapper()
-            elif is_callable:
-                styled = cls_or_fn
 
-                case = models.Case(cls_or_fn, style = case_name)
+                cls_or_fn = Wrapper
+            elif callable(cls_or_fn):
+                case = models.Case \
+                (
+                    renderer = cls_or_fn,
+                    style    = case_style,
+                )
 
             self.add(case)
 
-            return styled
+            return cls_or_fn
 
-        if cls_or_fn is None:
-            return wrap
-
-        return wrap(cls_or_fn)
+        return \
+        (
+            wrap
+            if cls_or_fn is None
+            else wrap(cls_or_fn)
+        )
 
     def get(self, style: str, default: typing.Any = None) -> typing.Any:
-        return self._store.get(style, default = default)
+        items: typing.List[models.Case] = \
+        [
+            case
+            for case in self
+            if case.style == style
+        ]
 
-    def add(self, case: models.Case):
-        return self._store.add(case)
-
-    def clear(self) -> None:
-        return self._store.clear()
-
-    def copy(self):
-        inst = self.__class__()
-        inst.update(self._store)
-        return inst
-
-    def pop(self) -> models.Case:
-        return self._store.pop()
-
-    def remove(self, case: models.Case) -> None:
-        return self._store.remove(case)
-
-    def update(self, cases) -> None:
-        self._store.update(cases)
+        return \
+        (
+            items[0]
+            if items
+            else default
+        )
 
     def identify(self, string: str) -> typing.List[models.Case]:
         return \
