@@ -1,9 +1,19 @@
-from .parsers import parse
-from .cases   import *
-from .enums   import Case
+from .models       import Case
+from .parsers      import Parser
+from .repositories import Cases
+from .styles       import *
 
-lower    = lambda string: Lower.render(parse(string))
-upper    = lambda string: Upper.render(parse(string))
-title    = lambda string: Title.render(parse(string))
-sentence = lambda string: Sentence.render(parse(string))
-snake    = lambda string: Snake.render(parse(string))
+parser: Parser = Parser()
+
+parse = parser.parse
+
+identify = cases.identify
+case     = cases.__call__
+
+locals().update \
+(
+    {
+        case.style: case
+        for case in cases
+    }
+)
