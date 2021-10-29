@@ -17,26 +17,14 @@ String case conversion, identification, parsing and creation
 ['MY', 'mask', 'of', 'Sanity', 'IS', 'slowly', 'Slipping']
 ```
 
+### Conversion
+```python
+>>> case.snake('alphaBRAVOCharlie')
+'alpha_bravo_charlie'
+```
+
 ### Identification
 ```python
 >>> case.identify('FooBar')
 [Case(style='pascal')]
-```
-
-### Conversion
-```python
->>> case.camel('alphaBRAVOCharlie')
-'alphaBravoCharlie'
-```
-
-### Translation
-```python
->>> case.translators.alternating(['foo', 'bar'])
-['fOo', 'BaR']
-```
-
-### Rendering
-```python
->>> case.renderers.underscore(['foo', 'bar'])
-'foo_bar'
 ```
