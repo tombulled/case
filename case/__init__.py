@@ -1,19 +1,10 @@
-from .models       import Case
-from .parsers      import Parser
+from parse import parse
+
+from .models import Case
 from .repositories import Cases
-from .styles       import *
-
-parser: Parser = Parser()
-
-parse = parser.parse
+from .styles import *
 
 identify = cases.identify
-case     = cases.__call__
+case = cases.__call__
 
-locals().update \
-(
-    {
-        case.style: case
-        for case in cases
-    }
-)
+locals().update({case.style: case for case in cases})
