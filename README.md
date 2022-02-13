@@ -1,4 +1,4 @@
-# cassidy
+# case
 String case conversion, identification, parsing and creation
 
 ## Usage

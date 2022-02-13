@@ -1,28 +1,28 @@
 import dataclasses
 import typing
+import parse
 
 from . import types
-from . import parsers
 from . import utils
 
-model = dataclasses.dataclass \
-(
-    frozen = True,
-    repr   = False,
+
+model = dataclasses.dataclass(
+    frozen=True,
+    repr=False,
 )
+
 
 @model
 class Case:
-    render:  types.Renderer
-    prepare: types.Translator     = utils.identity
-    parse:   types.Parser         = dataclasses.field(default_factory = parsers.Parser)
-    style:   typing.Optional[str] = None
+    render: types.Renderer
+    prepare: types.Translator = utils.identity
+    parse: types.Parser = dataclasses.field(default_factory=parse.Parser)
+    style: typing.Optional[str] = None
 
     def __repr__(self) -> str:
-        return '{class_name}(style={style!r})'.format \
-        (
-            class_name = type(self).mro()[-2].__name__,
-            style      = self.style,
+        return "{class_name}(style={style!r})".format(
+            class_name=type(self).mro()[-2].__name__,
+            style=self.style,
         )
 
     def __call__(self, string: str) -> str:
