@@ -6,52 +6,54 @@ from . import utils
 from . import renderers
 
 
-def lower(words: typing.List[str]) -> typing.List[str]:
-    return [word.lower() for word in words]
+def lower(strings: typing.List[str], /) -> typing.List[str]:
+    return [word.lower() for word in strings]
 
 
-def upper(words: typing.List[str]) -> typing.List[str]:
-    return [word.upper() for word in words]
+def upper(strings: typing.List[str], /) -> typing.List[str]:
+    return [word.upper() for word in strings]
 
 
-def title(words: typing.List[str]) -> typing.List[str]:
-    return [word.title() for word in words]
+def title(strings: typing.List[str], /) -> typing.List[str]:
+    return [word.title() for word in strings]
 
 
-def swapcase(words: typing.List[str]) -> typing.List[str]:
-    return [word.swapcase() for word in words]
+def swapcase(strings: typing.List[str], /) -> typing.List[str]:
+    return [word.swapcase() for word in strings]
 
 
-def capitalize(words: typing.List[str]) -> typing.List[str]:
+def capitalize(strings: typing.List[str], /) -> typing.List[str]:
     return [
         (word.title() if index == 0 else word.lower())
-        for index, word in enumerate(words)
+        for index, word in enumerate(strings)
     ]
 
 
-def dromedary(words: typing.List[str]) -> typing.List[str]:
+def dromedary(strings: typing.List[str], /) -> typing.List[str]:
     return [
         (word.lower() if index == 0 else word.title())
-        for index, word in enumerate(words)
+        for index, word in enumerate(strings)
     ]
 
 
-def alternating(words: typing.List[str]) -> typing.List[str]:
+def alternating(strings: typing.List[str], /) -> typing.List[str]:
     return utils.chunk(
         string="".join(
             (str.lower, str.upper)[index % 2](character)
-            for index, character in enumerate(itertools.chain(*words))
+            for index, character in enumerate(itertools.chain(*strings))
         ),
-        sizes=[len(word) for word in words],
+        sizes=[len(word) for word in strings],
     )
 
 
-def sponge(words: typing.List[str]) -> typing.List[str]:
+def sponge(strings: typing.List[str]) -> typing.List[str]:
     return utils.chunk(
         string=renderers.concatenate(
-            random.choice((str.lower, str.upper))(character)
-            for word in words
-            for character in word
+            [
+                random.choice((str.lower, str.upper))(character)
+                for word in strings
+                for character in word
+            ]
         ),
-        sizes=[len(word) for word in words],
+        sizes=[len(word) for word in strings],
     )

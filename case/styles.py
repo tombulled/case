@@ -1,103 +1,162 @@
-from . import models
-from . import renderers
-from . import repositories
-from . import translators
-from . import types
-
-cases: repositories.Cases = repositories.Cases()
+import typing
+from . import abc, renderers, translators
 
 
-@cases
-class Lower(models.Case):
-    prepare: types.Translator = translators.lower
-    render: types.Renderer = renderers.space
+class Lower(abc.Case):
+    @staticmethod
+    def translate(strings: typing.List[str], /) -> typing.List[str]:
+        return translators.lower(strings)
+
+    @staticmethod
+    def render(strings: typing.List[str], /) -> str:
+        return renderers.space(strings)
 
 
-@cases
-class Upper(models.Case):
-    prepare: types.Translator = translators.upper
-    render: types.Renderer = renderers.space
+class Upper(abc.Case):
+    @staticmethod
+    def translate(strings: typing.List[str], /) -> typing.List[str]:
+        return translators.upper(strings)
+
+    @staticmethod
+    def render(strings: typing.List[str], /) -> str:
+        return renderers.space(strings)
 
 
-@cases
-class Title(models.Case):
-    prepare: types.Translator = translators.title
-    render: types.Renderer = renderers.space
+class Title(abc.Case):
+    @staticmethod
+    def translate(strings: typing.List[str], /) -> typing.List[str]:
+        return translators.title(strings)
+
+    @staticmethod
+    def render(strings: typing.List[str], /) -> str:
+        return renderers.space(strings)
 
 
-@cases
-class Sentence(models.Case):
-    prepare: types.Translator = translators.capitalize
-    render: types.Renderer = renderers.space
+class Sentence(abc.Case):
+    @staticmethod
+    def translate(strings: typing.List[str], /) -> typing.List[str]:
+        return translators.capitalize(strings)
+
+    @staticmethod
+    def render(strings: typing.List[str], /) -> str:
+        return renderers.space(strings)
 
 
-@cases
-class Snake(models.Case):
-    prepare: types.Translator = translators.lower
-    render: types.Renderer = renderers.underscore
+class Snake(abc.Case):
+    @staticmethod
+    def translate(strings: typing.List[str], /) -> typing.List[str]:
+        return translators.lower(strings)
+
+    @staticmethod
+    def render(strings: typing.List[str], /) -> str:
+        return renderers.underscore(strings)
 
 
-@cases
-class Helter(models.Case):
-    prepare: types.Translator = translators.title
-    render: types.Renderer = renderers.underscore
+class Helter(abc.Case):
+    @staticmethod
+    def translate(strings: typing.List[str], /) -> typing.List[str]:
+        return translators.title(strings)
+
+    @staticmethod
+    def render(strings: typing.List[str], /) -> str:
+        return renderers.underscore(strings)
 
 
-@cases
-class Macro(models.Case):
-    prepare: types.Translator = translators.upper
-    render: types.Renderer = renderers.underscore
+class Macro(abc.Case):
+    @staticmethod
+    def translate(strings: typing.List[str], /) -> typing.List[str]:
+        return translators.upper(strings)
+
+    @staticmethod
+    def render(strings: typing.List[str], /) -> str:
+        return renderers.underscore(strings)
 
 
-@cases
-class Kebab(models.Case):
-    prepare: types.Translator = translators.lower
-    render: types.Renderer = renderers.hyphen
+class Kebab(abc.Case):
+    @staticmethod
+    def translate(strings: typing.List[str], /) -> typing.List[str]:
+        return translators.lower(strings)
+
+    @staticmethod
+    def render(strings: typing.List[str], /) -> str:
+        return renderers.hyphen(strings)
 
 
-@cases
-class Train(models.Case):
-    prepare: types.Translator = translators.title
-    render: types.Renderer = renderers.hyphen
+class Train(abc.Case):
+    @staticmethod
+    def translate(strings: typing.List[str], /) -> typing.List[str]:
+        return translators.title(strings)
+
+    @staticmethod
+    def render(strings: typing.List[str], /) -> str:
+        return renderers.hyphen(strings)
 
 
-@cases
-class Cobol(models.Case):
-    prepare: types.Translator = translators.upper
-    render: types.Renderer = renderers.hyphen
+class Cobol(abc.Case):
+    @staticmethod
+    def translate(strings: typing.List[str], /) -> typing.List[str]:
+        return translators.upper(strings)
+
+    @staticmethod
+    def render(strings: typing.List[str], /) -> str:
+        return renderers.hyphen(strings)
 
 
-@cases
-class Flat(models.Case):
-    prepare: types.Translator = translators.lower
-    render: types.Renderer = renderers.concatenate
+class Flat(abc.Case):
+    @staticmethod
+    def translate(strings: typing.List[str], /) -> typing.List[str]:
+        return translators.lower(strings)
+
+    @staticmethod
+    def render(strings: typing.List[str], /) -> str:
+        return renderers.concatenate(strings)
 
 
-@cases
-class Flush(models.Case):
-    prepare: types.Translator = translators.upper
-    render: types.Renderer = renderers.concatenate
+class Flush(abc.Case):
+    @staticmethod
+    def translate(strings: typing.List[str], /) -> typing.List[str]:
+        return translators.upper(strings)
+
+    @staticmethod
+    def render(strings: typing.List[str], /) -> str:
+        return renderers.concatenate(strings)
 
 
-@cases
-class Pascal(models.Case):
-    prepare: types.Translator = translators.title
-    render: types.Renderer = renderers.concatenate
+class Pascal(abc.Case):
+    @staticmethod
+    def translate(strings: typing.List[str], /) -> typing.List[str]:
+        return translators.title(strings)
+
+    @staticmethod
+    def render(strings: typing.List[str], /) -> str:
+        return renderers.concatenate(strings)
 
 
-@cases
-class Camel(models.Case):
-    prepare: types.Translator = translators.dromedary
-    render: types.Renderer = renderers.concatenate
+class Camel(abc.Case):
+    @staticmethod
+    def translate(strings: typing.List[str], /) -> typing.List[str]:
+        return translators.dromedary(strings)
+
+    @staticmethod
+    def render(strings: typing.List[str], /) -> str:
+        return renderers.concatenate(strings)
 
 
-@cases
-class Dot(models.Case):
-    prepare: types.Translator = translators.lower
-    render: types.Renderer = renderers.period
+class Dot(abc.Case):
+    @staticmethod
+    def translate(strings: typing.List[str], /) -> typing.List[str]:
+        return translators.lower(strings)
+
+    @staticmethod
+    def render(strings: typing.List[str], /) -> str:
+        return renderers.period(strings)
 
 
-@cases
-class Path(models.Case):
-    prepare: types.Translator = translators.lower
-    render: types.Renderer = renderers.slash
+class Path(abc.Case):
+    @staticmethod
+    def translate(strings: typing.List[str], /) -> typing.List[str]:
+        return translators.lower(strings)
+
+    @staticmethod
+    def render(strings: typing.List[str], /) -> str:
+        return renderers.slash(strings)

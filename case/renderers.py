@@ -1,8 +1,25 @@
-from . import types
+import typing
 
-space: types.Renderer = " ".join
-concatenate: types.Renderer = "".join
-underscore: types.Renderer = "_".join
-hyphen: types.Renderer = "-".join
-period: types.Renderer = ".".join
-slash: types.Renderer = "/".join
+
+def space(strings: typing.List[str], /) -> str:
+    return " ".join(strings)
+
+
+def concatenate(strings: typing.List[str], /) -> str:
+    return "".join(strings)
+
+
+def underscore(strings: typing.List[str], /) -> str:
+    return "_".join(strings)
+
+
+def hyphen(strings: typing.List[str], /) -> str:
+    return "-".join(strings)
+
+
+def period(strings: typing.List[str], /) -> str:
+    return ".".join(strings)
+
+
+def slash(strings: typing.List[str], /) -> str:
+    return "/".join(strings)
