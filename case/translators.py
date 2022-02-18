@@ -4,17 +4,9 @@ import typing
 
 from . import api, models, protocols
 
-class WordTranslatorHook(typing.Protocol):
-    def __call__(self, word: models.Word, /) -> str:
-        ...
-
-class CharacterTranslatorHook(typing.Protocol):
-    def __call__(self, character: models.Character, /) -> str:
-        ...
-
 @dataclasses.dataclass
 class WordTranslator(protocols.Translator):
-    hook: WordTranslatorHook
+    hook: typing.Callable[[models.Word], str]
 
     def __call__(self, strings: typing.Iterable[str], /) -> typing.Iterable[str]:
         word: models.Word
@@ -23,7 +15,7 @@ class WordTranslator(protocols.Translator):
 
 @dataclasses.dataclass
 class CharacterTranslator(protocols.Translator):
-    hook: CharacterTranslatorHook
+    hook: typing.Callable[[models.Character], str]
 
     def __call__(self, strings: typing.Iterable[str], /) -> typing.Iterable[str]:
         word: models.Word
@@ -36,10 +28,10 @@ class CharacterTranslator(protocols.Translator):
 
             yield translated
 
-def character_translator(hook: CharacterTranslatorHook) -> CharacterTranslator:
+def character_translator(hook: typing.Callable) -> CharacterTranslator:
     return CharacterTranslator(hook)
 
-def word_translator(hook: WordTranslatorHook) -> WordTranslator:
+def word_translator(hook: typing.Callable) -> WordTranslator:
     return WordTranslator(hook)
 
 @word_translator
