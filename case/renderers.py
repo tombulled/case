@@ -1,25 +1,18 @@
+import dataclasses
 import typing
 
+from . import protocols
 
-def space(strings: typing.List[str], /) -> str:
-    return " ".join(strings)
+@dataclasses.dataclass
+class JoinRenderer(protocols.Renderer):
+    sep: str
 
+    def __call__(self, strings: typing.Iterable[str], /) -> str:
+        return self.sep.join(strings)
 
-def concatenate(strings: typing.List[str], /) -> str:
-    return "".join(strings)
-
-
-def underscore(strings: typing.List[str], /) -> str:
-    return "_".join(strings)
-
-
-def hyphen(strings: typing.List[str], /) -> str:
-    return "-".join(strings)
-
-
-def period(strings: typing.List[str], /) -> str:
-    return ".".join(strings)
-
-
-def slash(strings: typing.List[str], /) -> str:
-    return "/".join(strings)
+space: protocols.Renderer = JoinRenderer(" ")
+concatenate: protocols.Renderer = JoinRenderer("")
+underscore: protocols.Renderer = JoinRenderer("_")
+hyphen: protocols.Renderer = JoinRenderer("-")
+period: protocols.Renderer = JoinRenderer(".")
+slash: protocols.Renderer = JoinRenderer("/")
