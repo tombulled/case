@@ -1,12 +1,13 @@
-from abc import ABC, abstractmethod
+import abc
 from typing import Iterable
 
-class Renderer(ABC):
-    @abstractmethod
+
+class RendererABC(abc.ABC):
+    @abc.abstractmethod
     def render(self, strings: Iterable[str], /) -> str:
         ...
 
-    @abstractmethod
+    @abc.abstractmethod
     def unrender(self, string: str, /) -> Iterable[str]:
         ...
 

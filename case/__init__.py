@@ -1,18 +1,18 @@
-from .models import Case, SimpleRenderer
+from .models import Case, Renderer
 from .protocols import Parser, Translator
-from .abc import Renderer
+from .abc import RendererABC
+
 # from . import styles
 from . import renderers, translators
 
 import typing
-import registrate
 
 # cases = registrate.Record()
 
 snake = Case(
-    'snake',
+    name="snake",
     renderer=renderers.underscore,
-    translator=translators.lower,
+    translators=[translators.lower],
 )
 
 
@@ -34,10 +34,10 @@ snake = Case(
 # path: Case = cases(styles.Path())
 
 
-def identify(
-    string: str, case_styles: typing.Optional[typing.List[Case]] = None
-) -> typing.List[Case]:
-    if case_styles is None:
-        case_styles = cases
+# def identify(
+#     string: str, case_styles: typing.Optional[typing.List[Case]] = None
+# ) -> typing.List[Case]:
+#     if case_styles is None:
+#         case_styles = cases
 
-    return [case for case in case_styles if case.match(string)]
+#     return [case for case in case_styles if case.match(string)]
