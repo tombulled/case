@@ -1,8 +1,8 @@
 from . import models
 
-space: models.Renderer = models.Renderer(word_sep=" ")
-concatenate: models.Renderer = models.Renderer(word_sep="")
-underscore: models.Renderer = models.Renderer(word_sep="_")
-hyphen: models.Renderer = models.Renderer(word_sep="-")
-period: models.Renderer = models.Renderer(word_sep=".")
-slash: models.Renderer = models.Renderer(word_sep="/")
+space: models.SimpleRenderer = models.SimpleRenderer(word_sep=" ")
+concatenate: models.SimpleRenderer = models.SimpleRenderer(word_sep="")
+underscore: models.SimpleRenderer = models.SimpleRenderer(word_sep="_")
+hyphen: models.SimpleRenderer = models.SimpleRenderer(word_sep="-")
+period: models.SimpleRenderer = models.SimpleRenderer(word_sep=".")
+slash: models.SimpleRenderer = models.SimpleRenderer(word_sep="/")
