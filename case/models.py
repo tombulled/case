@@ -1,10 +1,10 @@
 import dataclasses
-import typing
-import parse
 import string
+import typing
 
-from . import abc
-from . import protocols
+import parse
+
+from . import abc, protocols
 
 
 @dataclasses.dataclass
@@ -19,30 +19,29 @@ class Translator(protocols.Translator):
 class Case:
     name: str
     renderer: abc.RendererABC = dataclasses.field(repr=False)
-    translators: typing.List[protocols.Translator] = dataclasses.field(
-        default_factory=list, repr=False
+    translator: typing.Optional[protocols.Translator] = dataclasses.field(
+        default=None, repr=False
     )
+    parser: protocols.Parser = parse.parse
 
     def __call__(self, string: str, /) -> str:
-        return self.feed(parse.parse(string))
+        return self.feed(self.parser(string))
+
+    def feed(self, strings: typing.Iterable[str], /) -> typing.Iterable[str]:
+        if self.translator is not None:
+            strings = self.translator(strings)
+
+        return self.renderer.render(strings)
 
     def style(self, strings: typing.Iterable[str], /) -> str:
-        return self.renderer.render(self.translate(strings))
+        return "".join(self.feed(strings))
 
     def match(self, string: str, /) -> bool:
         return self(string) == string
 
-    def translate(self, strings: typing.Iterable[str], /) -> typing.Iterable[str]:
-        for translator in self.translators:
-            strings = translator(strings)
-
-        return strings
-
 
 @dataclasses.dataclass(repr=False)
 class Renderer(abc.RendererABC):
-    prefix: typing.Optional[str] = None
-    suffix: typing.Optional[str] = None
     word_prefix: typing.Optional[str] = None
     word_suffix: typing.Optional[str] = None
     word_sep: typing.Optional[str] = None
@@ -60,32 +59,40 @@ class Renderer(abc.RendererABC):
             ),
         )
 
-    def render(self, strings: typing.Iterable[str], /) -> str:
-        return "".join(
-            (
-                self.prefix,
-                self.word_sep.join(
-                    "".join(
-                        (
-                            self.word_prefix,
-                            self.char_sep.join(
-                                "".join(
-                                    (
-                                        self.char_prefix,
-                                        character,
-                                        self.char_suffix,
-                                    )
-                                )
-                                for character in string
-                            ),
-                            self.word_suffix,
+    def render(self, strings: typing.Iterable[str], /) -> typing.Iterable[str]:
+        word_prefix: str = self.word_prefix or ""
+        word_suffix: str = self.word_suffix or ""
+        word_sep: str = self.word_sep or ""
+
+        char_prefix: str = self.char_prefix or ""
+        char_suffix: str = self.char_suffix or ""
+        char_sep: str = self.char_sep or ""
+
+        index: int
+        string: str
+        for index, string in enumerate(strings):
+            word: str = "".join(
+                (
+                    word_prefix,
+                    char_sep.join(
+                        "".join(
+                            (
+                                char_prefix,
+                                character,
+                                char_suffix,
+                            )
                         )
-                    )
-                    for string in strings
-                ),
-                self.suffix,
+                        for character in string
+                    ),
+                    word_suffix,
+                )
             )
-        )
+
+            if index == 0:
+                yield word
+
+            else:
+                yield f"{word_sep}{word}"
 
     # Throws RenderException('Cannot unrender')
     def unrender(self, s: str, /) -> typing.Iterable[str]:
@@ -104,9 +111,6 @@ class Renderer(abc.RendererABC):
             assert s.endswith(p)
 
             return s[: -len(p)]
-
-        s = lstrip(s, self.prefix)
-        s = rstrip(s, self.suffix)
 
         words = iter(s) if not self.word_sep else s.split(self.word_sep)
 
