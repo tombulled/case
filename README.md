@@ -26,17 +26,6 @@ String case conversion, identification, parsing and creation
 >>> import case
 ```
 
-### Parsing
-```python
->>> string = 'MY __mask__ --ofSanityIS.slowly#Slipping'
->>>
->>> case.parse(string)
-['my', 'mask', 'of', 'sanity', 'is', 'slowly', 'slipping']
->>>
->>> case.parse(string, case_sensitive = True)
-['MY', 'mask', 'of', 'Sanity', 'IS', 'slowly', 'Slipping']
-```
-
 ## Conversion
 ```python
 >>> case.snake('alphaBRAVOCharlie')

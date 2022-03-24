@@ -7,7 +7,7 @@ import parse
 from . import abc, protocols
 
 
-@dataclasses.dataclass
+@dataclasses.dataclass(repr=False, frozen=True, eq=True)
 class Translator(protocols.Translator):
     hook: typing.Callable[[int, str], str]
 
@@ -15,17 +15,19 @@ class Translator(protocols.Translator):
         return (self.hook(index, string) for index, string in enumerate(strings))
 
 
-@dataclasses.dataclass(frozen=True)
+@dataclasses.dataclass(frozen=True, eq=True)
 class Case:
     name: str
     renderer: abc.RendererABC = dataclasses.field(repr=False)
     translator: typing.Optional[protocols.Translator] = dataclasses.field(
         default=None, repr=False
     )
-    parser: protocols.Parser = parse.parse
+    parser: protocols.Parser = dataclasses.field(
+        default=parse.parse, repr=False
+    )
 
     def __call__(self, string: str, /) -> str:
-        return self.feed(self.parser(string))
+        return ''.join(self.feed(self.parser(string)))
 
     def feed(self, strings: typing.Iterable[str], /) -> typing.Iterable[str]:
         if self.translator is not None:
@@ -40,7 +42,7 @@ class Case:
         return self(string) == string
 
 
-@dataclasses.dataclass(repr=False)
+@dataclasses.dataclass(repr=False, frozen=True, eq=True)
 class Renderer(abc.RendererABC):
     word_prefix: typing.Optional[str] = None
     word_suffix: typing.Optional[str] = None

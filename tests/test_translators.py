@@ -21,17 +21,9 @@ def test_title(strings: typing.Iterable[str]) -> None:
     assert list(translators.title(strings)) == ["Foo", "Bar"]
 
 
-def test_swapcase(strings: typing.Iterable[str]) -> None:
-    assert list(translators.swapcase(strings)) == ["Foo", "bAr"]
-
-
 def test_capitalize(strings: typing.Iterable[str]) -> None:
     assert list(translators.capitalize(strings)) == ["Foo", "bar"]
 
 
 def test_dromedary(strings: typing.Iterable[str]) -> None:
     assert list(translators.dromedary(strings)) == ["foo", "Bar"]
-
-
-def test_alternating(strings: typing.Iterable[str]) -> None:
-    assert list(translators.alternating(strings)) == ["fOo", "BaR"]
