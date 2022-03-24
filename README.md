@@ -26,7 +26,7 @@ String case conversion, identification, parsing and creation
 >>> import case
 ```
 
-## Conversion
+### Conversion
 ```python
 >>> case.snake('alphaBRAVOCharlie')
 'alpha_bravo_charlie'
