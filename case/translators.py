@@ -1,57 +1,32 @@
-import random
 import typing
-import itertools
 
-from . import utils
-from . import renderers
+from . import models
 
 
-def lower(words: typing.List[str]) -> typing.List[str]:
-    return [word.lower() for word in words]
+def translator(hook: typing.Callable, /) -> models.Translator:
+    return models.Translator(hook)
 
 
-def upper(words: typing.List[str]) -> typing.List[str]:
-    return [word.upper() for word in words]
+@translator
+def lower(_: int, string: str, /) -> str:
+    return string.lower()
 
 
-def title(words: typing.List[str]) -> typing.List[str]:
-    return [word.title() for word in words]
+@translator
+def upper(_: int, string: str, /) -> str:
+    return string.upper()
 
 
-def swapcase(words: typing.List[str]) -> typing.List[str]:
-    return [word.swapcase() for word in words]
+@translator
+def title(_: int, string: str, /) -> str:
+    return string.title()
 
 
-def capitalize(words: typing.List[str]) -> typing.List[str]:
-    return [
-        (word.title() if index == 0 else word.lower())
-        for index, word in enumerate(words)
-    ]
+@translator
+def capitalize(index: int, string: str, /) -> str:
+    return string.title() if index == 0 else string.lower()
 
 
-def dromedary(words: typing.List[str]) -> typing.List[str]:
-    return [
-        (word.lower() if index == 0 else word.title())
-        for index, word in enumerate(words)
-    ]
-
-
-def alternating(words: typing.List[str]) -> typing.List[str]:
-    return utils.chunk(
-        string="".join(
-            (str.lower, str.upper)[index % 2](character)
-            for index, character in enumerate(itertools.chain(*words))
-        ),
-        sizes=[len(word) for word in words],
-    )
-
-
-def sponge(words: typing.List[str]) -> typing.List[str]:
-    return utils.chunk(
-        string=renderers.concatenate(
-            random.choice((str.lower, str.upper))(character)
-            for word in words
-            for character in word
-        ),
-        sizes=[len(word) for word in words],
-    )
+@translator
+def dromedary(index: int, string: str, /) -> str:
+    return string.lower() if index == 0 else string.title()

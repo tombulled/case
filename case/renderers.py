@@ -1,8 +1,8 @@
-from . import types
+from . import models
 
-space: types.Renderer = " ".join
-concatenate: types.Renderer = "".join
-underscore: types.Renderer = "_".join
-hyphen: types.Renderer = "-".join
-period: types.Renderer = ".".join
-slash: types.Renderer = "/".join
+space: models.Renderer = models.Renderer(word_sep=" ")
+concatenate: models.Renderer = models.Renderer(word_sep="")
+underscore: models.Renderer = models.Renderer(word_sep="_")
+hyphen: models.Renderer = models.Renderer(word_sep="-")
+period: models.Renderer = models.Renderer(word_sep=".")
+slash: models.Renderer = models.Renderer(word_sep="/")
